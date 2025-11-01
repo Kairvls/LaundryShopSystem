@@ -1,0 +1,25 @@
+﻿@model IEnumerable<LaundryShopSystem.Models.Incident>
+@{
+    ViewBag.Title = "Incidents";
+}
+<h4 class="mb-3 accent">Incident Reports</h4>
+<div class="card card-strong p-3">
+    <table class="table table-hover">
+        <thead><tr><th>Reported</th><th>Order</th><th>Description</th><th>Compensation</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+            @foreach (var i in Model)
+            {
+                <tr>
+                    <td>@i.ReportedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@i.OrderId</td>
+                    <td style="max-width:320px;">@i.Description</td>
+                    <td>₱@i.CompensationAmount</td>
+                    <td>@(i.ResolvedAt != null ? "Resolved" : "Pending")</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary" href="/Incidents/Details/@i.IncidentId">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

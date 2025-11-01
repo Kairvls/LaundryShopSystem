@@ -1,0 +1,108 @@
+﻿@model LaundryShopSystem.Models.Order
+@{
+    ViewBag.Title = "Track Order";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // optional
+}
+
+<div class="container py-5">
+    <div class="card shadow-lg border-0 mx-auto" style="max-width:820px; border-radius:16px;">
+        <div class="card-body">
+            <h4 class="fw-bold text-primary mb-4 text-center">
+                <i class="bi bi-truck"></i> Track Your Laundry
+            </h4>
+
+            <!-- Search Form -->
+            <form method="get" action="/Orders/Track" class="mb-4">
+                <div class="input-group">
+                    <input name="token" class="form-control form-control-lg" placeholder="Enter receipt QR token or order ID" required />
+                    <button class="btn btn-primary px-4" type="submit">
+                        <i class="bi bi-search"></i> Track
+                    </button>
+                </div>
+            </form>
+
+            @if (Model != null)
+            {
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <th>Order ID:</th>
+                                        <td>@Model.OrderId</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status:</th>
+                                        <td><span class="badge bg-info fs-6">@Model.Status</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total:</th>
+                                        <td>₱@Model.TotalAmount</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Dropoff At:</th>
+                                        <td>@Model.DropoffAt.ToString("yyyy-MM-dd HH:mm")</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Notes:</th>
+                                        <td>@Model.Notes</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Progress Bar Section -->
+                        <div class="mt-4">
+                            <p class="fw-semibold mb-2 text-muted">Progress</p>
+                            <div class="progress" style="height: 20px;">
+                                @{
+                                    int progress = Model.Status switch
+                                    {
+                                        "Pending" => 25,
+                                        "InProcess" => 50,
+                                        "ReadyForPickup" => 75,
+                                        "Completed" => 100,
+                                        _ => 10
+                                    };
+                                }
+                                <div class="progress-bar progress-bar-striped bg-primary" role="progressbar"
+                                     style="width:@progress%" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100">
+                                    @progress%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QR & Contact -->
+                    <div class="col-md-4 text-center mt-4 mt-md-0">
+                        @if (!string.IsNullOrEmpty(Model.QRCode))
+                        {
+                            <img src="@Url.Content(Model.QRCode)" alt="QR Code"
+                                 class="img-fluid border p-2 shadow-sm rounded mb-2"
+                                 style="width:160px; height:160px; background:white;" />
+                        }
+                        else
+                        {
+                            <div class="border rounded py-5 text-muted">No QR available</div>
+                        }
+
+                        <p class="mt-2 small text-secondary">
+                            <i class="bi bi-telephone"></i> Shop Contact: <strong>+63 912 345 6789</strong>
+                        </p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info text-center mt-3">
+                    Enter a valid Order ID or QR token to track your laundry.
+                </div>
+            }
+        </div>
+
+        <div class="card-footer bg-light text-center small text-muted" style="border-radius: 0 0 16px 16px;">
+            <i class="bi bi-droplet text-primary"></i> Powered by <strong>LaundryShopSystem</strong>
+        </div>
+    </div>
+</div>

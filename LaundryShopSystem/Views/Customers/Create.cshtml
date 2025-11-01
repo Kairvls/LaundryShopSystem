@@ -1,0 +1,28 @@
+﻿@model LaundryShopSystem.Models.Customer
+@{
+    ViewBag.Title = "Add Customer";
+}
+<div class="card card-strong p-4" style="max-width:720px;">
+    <h4 class="accent">Add Customer</h4>
+    <form method="post" action="/Customers/Create">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Full Name</label>
+                <input asp-for="FullName" class="form-control" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Phone</label>
+                <input asp-for="Phone" class="form-control" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Email</label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Address</label>
+                <input asp-for="Address" class="form-control" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Save Customer</button>
+    </form>
+</div>

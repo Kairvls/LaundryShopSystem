@@ -1,0 +1,11 @@
+﻿@model LaundryShopSystem.Models.Report
+@{
+    ViewBag.Title = "Weekly Report";
+}
+<div class="card card-strong p-4">
+    <h4 class="accent">Daily Report (@Model.Period)</h4>
+    <p><strong>Total Income:</strong> ₱@Model.TotalIncome</p>
+    <p><strong>Total Orders:</strong> @Model.TotalOrders</p>
+    <p><strong>Completed:</strong> @Model.CompletedOrders</p>
+    <p><strong>Cancelled:</strong> @Model.CancelledOrders</p>
+</div>

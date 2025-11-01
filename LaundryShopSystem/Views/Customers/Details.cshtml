@@ -1,0 +1,12 @@
+﻿@model LaundryShopSystem.Models.Customer
+@{
+    ViewBag.Title = "Customer Details";
+}
+<div class="card card-strong p-4">
+    <h4 class="accent">Customer</h4>
+    <p><strong>Name:</strong> @Model.FullName</p>
+    <p><strong>Phone:</strong> @Model.Phone</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Address:</strong> @Model.Address</p>
+    <p><strong>Joined:</strong> @Model.CreatedAt.ToString("yyyy-MM-dd")</p>
+</div>

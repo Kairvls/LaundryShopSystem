@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<div class="d-flex justify-content-center align-items-center vh-100" style="background-color: #f5f7fa;">
+    <div class="card p-4 position-relative" style="width: 480px; background-color: white; border-radius: 8% 92% 7% 93% / 91% 7% 93% 9%; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
+        <!-- Header -->
+        <h3 id="roleHeader" class="text-center mb-4" style="font-family: 'Roboto', sans-serif; font-weight: 700; color: #0d6efd;">Login as Staff / Owner</h3>
+
+        <!-- Choice buttons: vertical -->
+        <div id="roleChoice" class="d-flex flex-column align-items-center mb-4 gap-3">
+            <button class="btn w-100 staff-btn" onclick="showLogin('Staff')">Staff</button>
+            <button class="btn w-100 owner-btn" onclick="showLogin('Owner')">Owner</button>
+        </div>
+
+        <!-- Login form, hidden by default -->
+        <div id="loginForm" style="display:none;">
+            <!-- X Back button top-right -->
+            <button type="button" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close" onclick="goBack()"></button>
+
+            <h5 id="loginHeader" class="text-center mb-3" style="color: #0d6efd;"></h5>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger">@ViewBag.Error</div>
+            }
+
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+            {
+                <input type="hidden" name="role" id="roleInput" value="" />
+
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" required style="border-radius: 10px; border: 1px solid #ced4da;">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" required style="border-radius: 10px; border: 1px solid #ced4da;">
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100" style="border-radius: 10px; background-color: #0d6efd; border: none; transition: all 0.3s ease;">Login</button>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .staff-btn, .owner-btn {
+        background-color: white;
+        border: 2px solid #98CAEB; /* Accent blue border */
+        color: #0d6efd;
+        font-weight: 500;
+        border-radius: 10px;
+        padding: 8px 0;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+        .staff-btn:hover, .owner-btn:hover {
+            background-color: #0d6efd;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+    .owner-btn {
+        border-color: #0d6efd;
+        color: #0d6efd;
+    }
+
+    .btn-close {
+        filter: brightness(0.6);
+        transition: all 0.3s ease;
+    }
+
+        .btn-close:hover {
+            filter: brightness(1);
+        }
+</style>
+
+<script>
+    function showLogin(role) {
+        const roleChoiceDiv = document.getElementById('roleChoice');
+        const roleHeader = document.getElementById('roleHeader');
+        roleChoiceDiv.remove();
+        roleHeader.remove();
+
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('loginHeader').innerText = "Login as " + role;
+        document.getElementById('roleInput').value = role;
+    }
+
+    function goBack() {
+        location.reload();
+    }
+</script>

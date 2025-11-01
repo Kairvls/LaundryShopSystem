@@ -1,0 +1,26 @@
+﻿@model IEnumerable<LaundryShopSystem.Models.Order>
+@{
+    ViewBag.Title = "Manage Orders";
+}
+<h4 class="mb-3 accent">Manage Orders</h4>
+<div class="card card-strong p-3">
+    <table class="table table-striped align-middle">
+        <thead><tr><th>ID</th><th>Customer</th><th>Service</th><th>Status</th><th>Total</th><th></th></tr></thead>
+        <tbody>
+            @foreach (var o in Model)
+            {
+                <tr>
+                    <td>@o.OrderId</td>
+                    <td>@(o.Customer?.FullName ?? o.CustomerId.ToString())</td>
+                    <td>@o.ServiceMode</td>
+                    <td>@o.Status</td>
+                    <td>₱@o.TotalAmount</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="/Orders/Details/@o.OrderId">View</a>
+                        <a class="btn btn-sm btn-success" href="/Orders/UpdateStatus?id=@o.OrderId&status=ReadyForPickup">Mark Ready</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

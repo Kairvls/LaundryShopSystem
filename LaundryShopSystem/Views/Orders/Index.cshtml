@@ -1,0 +1,47 @@
+﻿@model IEnumerable<LaundryShopSystem.Models.Order>
+@{
+    ViewBag.Title = "Orders";
+}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Orders</h3>
+    <a class="btn btn-primary" href="/Orders/Create">New Order</a>
+</div>
+
+<div class="card card-strong p-3">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Service</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th>Dropoff</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model)
+            {
+                <tr>
+                    <td>@o.OrderId</td>
+                    <td>
+                        @(
+                        (o.GetType().GetProperty("Customer") != null) ?
+                        ((o.Customer != null) ? o.Customer.FullName : o.CustomerId.ToString()) :
+                        o.CustomerId.ToString()
+                    )
+                    </td>
+                    <td>@o.ServiceMode</td>
+                    <td>@o.Status</td>
+                    <td>₱@o.TotalAmount</td>
+                    <td>@o.DropoffAt.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary" href="/Orders/Details/@o.OrderId">View</a>
+                        <a class="btn btn-sm btn-success" href="/Transaction/Add/@o.OrderId">Pay</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

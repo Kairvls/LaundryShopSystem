@@ -1,0 +1,38 @@
+﻿@{
+    Layout = null;
+}
+@model LaundryShopSystem.Models.Transaction
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <h2>Transaction Details</h2>
+</head>
+<body>
+    <div>
+        <p><strong>Customer:</strong> @Model.CustomerName</p>
+        <p><strong>Date:</strong> @Model.PaidAt.ToString("MMMM dd, yyyy hh:mm tt")</p>
+        <p><strong>Total:</strong> ₱@Model.AmountPaid</p>
+
+        <h3>Items</h3>
+        <table class="table">
+            <thead>
+                <tr><th>Item</th><th>Service</th><th>Qty</th><th>Price</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.ItemName</td>
+                        <td>@item.ServiceType</td>
+                        <td>@item.Quantity</td>
+                        <td>₱@item.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
